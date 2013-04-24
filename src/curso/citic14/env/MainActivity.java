@@ -29,18 +29,16 @@ public class MainActivity extends Activity {
 		super.onCreate(savedInstanceState);
 		setContentView(R.layout.activity_main);
 		
-		temperatureTextView = (TextView)findViewById(R.id.txtTemperature);
-		pressureTextView = (TextView)findViewById(R.id.txtPressure);
-		lightTextView = (TextView)findViewById(R.id.txtLight);
-		
-		sensorManager = (SensorManager)getSystemService(SENSOR_SERVICE);
+		// TODO cargar los elementos de la ui
+
+		// TODO instanciar el sensor
 		
 		Timer updateTimer = new Timer("weatherUpdate");
 		updateTimer.schedule(new TimerTask() {
 			
 			@Override
 			public void run() {
-				updateUI();
+				// TODO acci—n del timmer
 			}
 		}, 0, 1000);
 	}
@@ -56,27 +54,7 @@ public class MainActivity extends Activity {
 		public void onAccuracyChanged(Sensor sensor, int accuracy) {}
 	};
 	
-	private final SensorEventListener pressureSensorListener = new SensorEventListener() {
-		
-		@Override
-		public void onSensorChanged(SensorEvent event) {
-			currentPres = event.values[0];
-		}
-		
-		@Override
-		public void onAccuracyChanged(Sensor sensor, int accuracy) { }
-	};
-	
-	private final SensorEventListener lightSensorListener = new SensorEventListener() {
-		
-		@Override
-		public void onSensorChanged(SensorEvent event) {
-			currentLigh = event.values[0];
-		}
-		
-		@Override
-		public void onAccuracyChanged(Sensor sensor, int accuracy) { }
-	};	
+	// TODO implementar los dos listeners que faltan.
 	
 	@Override
 	public boolean onCreateOptionsMenu(Menu menu) {
@@ -95,27 +73,15 @@ public class MainActivity extends Activity {
 		else
 			lightTextView.setText("No est‡ disponible el sensor de temperatura");
 		
-		Sensor tmpSensor = sensorManager.getDefaultSensor(Sensor.TYPE_AMBIENT_TEMPERATURE);
-		if (tmpSensor != null)
-			sensorManager.registerListener(tempSensorListener, tmpSensor, SensorManager.SENSOR_DELAY_NORMAL);
-		else
-			temperatureTextView.setText("No est‡ disponible el sensor de temperatura");
-		
-
-		Sensor pressureSensor = sensorManager.getDefaultSensor(Sensor.TYPE_PRESSURE);
-		if (pressureSensor != null)
-			sensorManager.registerListener(pressureSensorListener, pressureSensor, SensorManager.SENSOR_DELAY_NORMAL);
-		else
-			pressureTextView.setText("No est‡ disponible el sensor de presiones");		
-		
+		// TODO registar los sensores que faltan
 	}
 	
 	@Override
 	protected void onPause() {
 		super.onPause();
-		sensorManager.unregisterListener(lightSensorListener);
 		sensorManager.unregisterListener(tempSensorListener);
-		sensorManager.unregisterListener(pressureSensorListener);
+		
+		// TODO Eliminar los senoser
 	}
 	
 	private void updateUI() {
